@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+        .region{
+            background-color: #999;
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            margin: 10px;
+        }
+        .yellow{ 
+            background-color: yellow; 
+        }
+        .red{ 
+            background-color: red; 
+        }
+        .blue{ 
+            background-color: blue; 
+        }
+        .green{ 
+            background-color: green; 
+        }
+</style>
+</head>
+<body>
+    <script src="https://unpkg.com/vue"></script>
+    <div id="app">
+        <p>{{age > 25?'Больше 25 лет':'25 лет или меньше' }}</p>
+        <p><a v-bind:href="link">{{text}}</a></p>
+        <p>{{checkAge()}}</p>
+        <p>{{enabled}}</p>
+        <p v-once>{{message}}</p>
+        <p><div v-html="message"></div></p>
+        <button v-on:click="increase(3)">+</button>
+        <button v-on:click="decrease(2)">-</button>
+        <div>{{counter}}</div>
+        <p><div class="region" v-bind:class="color"></div></p>
+        <input type="text" v-model="color" />
+        <p>Введите число:<input v-model="number"></p>
+        <p>{{result}}</p>
+    </div>
+        
+    <script>
+        var userData = {
+                        name: 'Tom', 
+                        age:25,
+                        text: 'Google',
+                        link:'https://google.com',
+                        message: '<h2>Hello</h2>',
+                        counter: 0,
+                        isActive: false,
+                        isBounded: false,
+                        color: "",
+                        number: '',
+                        result: ''
+                        };
+        var app = new Vue({
+            el: '#app',
+            data: userData,
+            watch: {
+                number: function(newNumber) {
+                    if(newNumber > 0){
+                        this.factorial(newNumber);
+                    }
+                }
+            },
+            computed: {
+                enabled: function(){
+                    if (this.age > 17){
+                        return "доступ разрешен";
+                    }
+                    else {
+                        return "доступ запрещен";
+                    }
+                },
+                get: function() {
+                    return this.name + '' + this.age;
+                },
+                set: function(newValue) {
+                    var ageName = newValue.split('');
+                    this.name = names[0];
+                },
+                classObj: function() {
+                    return {
+                        active: this.isActive, bounded: this.isBounded
+                    }
+                }
+            },
+
+            methods:{
+            factorial: function(newNumber){
+                this.result = 'Идёт вычисление факториала...';
+                var vm = this;
+                setTimeout(function(){
+                    var res = 1;
+                        for(var i = 1; i<=newNumber; i++){
+                            res = res * i;               
+                        }
+                        vm.result = 'factorial chisla ' + newNumber + ' raven ' + res;
+                }, 2000);
+            },
+            increase: function(n, event){
+                console.log(event);
+                this.counter = this.counter + n;
+            },
+            decrease: function(n, event){
+                if(this.counter > 0) {
+                    console.log(event);
+                this.counter = this.counter - n;
+                }
+            },
+            checkAge: function(){
+                if (this.age > 17){
+                    return "доступ разрешен";
+                }
+                else {
+                    return "доступ запрещен";
+                }
+            }
+        }
+    })
+    </script>
+
+</body>
+</html>
