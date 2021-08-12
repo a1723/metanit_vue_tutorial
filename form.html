@@ -8,25 +8,27 @@
 </head>
 <body>
 <div id="app" class="col-md-2 p-3">
-    <template v-for="user in users">
-        <input type="radio" v-bind:value="user" v-model="selectedUser">
-        <label>{{user.name}}</label> 
-        <br>
-    </template>
+    <select v-model="suser" multiple>
+        <option v-for="user in users" v-bind:value="user">{{user.name}}</option>
+    </select>
     <br>
-    <span v-if="selecteduser!==''">Выбрано {{selectedUser.name}} - {{selectedUser.age}}</span>
+    <ul>
+        <li v-for="user in suser">Выбрано: {{user.name}} - {{user.age}}</li>
+    </ul>
+
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
     var app = new Vue({
         el: '#app',
         data: {
-            users: [
-                {name: 'los', age: 22},
-                {name: 'qwe', age: 23},
-                {name: 'qq', age: 23}
+            users:[
+                {name:'Tom', age:22},
+                {name:'Bob', age:25},
+                {name:'Sam', age:28},
+                {name:'Alice', age:26}
             ],
-            selectedUser: ''
+            suser: []
         }
     });
 </script>
