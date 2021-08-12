@@ -8,27 +8,23 @@
 </head>
 <body>
 <div id="app" class="col-md-2 p-3">
-    <select v-model="suser" multiple>
-        <option v-for="user in users" v-bind:value="user">{{user.name}}</option>
-    </select>
+    <input type="text" v-model.lazy="name" class="form-control">
+    <span>{{name}}</span>
     <br>
-    <ul>
-        <li v-for="user in suser">Выбрано: {{user.name}} - {{user.age}}</li>
-    </ul>
-
+    <input type="number" v-model.number="age" class="form-control">
+    <span>{{age}}</span>
+    <br>
+    <input type="text" v-model.number="message" class="form-control">
+    <span>{{message}}</span>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
     var app = new Vue({
         el: '#app',
         data: {
-            users:[
-                {name:'Tom', age:22},
-                {name:'Bob', age:25},
-                {name:'Sam', age:28},
-                {name:'Alice', age:26}
-            ],
-            suser: []
+            name: '',
+            age: 0,
+            message: ''
         }
     });
 </script>
