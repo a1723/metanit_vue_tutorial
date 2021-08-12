@@ -1,56 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Изучаем Vue.js</title>
-<meta charset="utf-8" />
-</head>
-<body>
-<div id="app1">
-    <input type="text" v-model="name" />
-    <input type="number" v-model="age" />
-    <p>{{name}} - {{age}} - {{position}}</p>
-</div>
-<div id="app2">
-    <input type="text" v-model="title" />
-    <button v-on:click="onClick">Change</button>
+<div id="app">
+    <ul>
+      <li v-for="phone in phones">
+      <p>{{ phone }}</p>
+      </li>
+    </ul>
+    <button v-on:click="updateList">Обновить</button>
+    <input type="text" v-model="phone">
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
-var vm1 = new Vue({
-    el: '#app1',
-    data: {name:'Tom', age: 22},
-    methods: {
-        setName: function(value){
-            this.name = value;
+    var app = new Vue({
+        el: '#app',
+        data: {
+            phones: ['iPhone 7', 'Galaxy S8', 'Nokia N8', 'Xiaomi Mi6'],
+            phone: ''
+        },
+        methods:{
+            updateList: function(){
+                Vue.set(this.phones, 0, this.phone);
+            }
         }
-    }
-});
-// установка свойств объекта Vue в обычном коде JS
-vm1.name = "Sam";
-vm1.setName("Mike");
- 
-// установка свойств объекта Vue в другом объекте Vue
-var vm2 = new Vue({
-    el: '#app2',
-    data: {title:''},
-    methods: {
-        onClick: function(){
-            vm1.setName(this.title);
-            //vm1.name = this.title;  // или так
-        }
-    }
-});
-
-// определение нового метода
-vm1.setAge = function(value){
-    vm1.age = value;
-}
-// определение нового свойства
-vm1.position = "admin";
-setTimeout(function(){
-    vm1.position = "moderator";
-}, 3000);
-
+    });
 </script>
-</body>
-</html>

@@ -5,123 +5,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-<style>
-        .region{
-            background-color: #999;
-            width: 100px;
-            height: 100px;
-            display: inline-block;
-            margin: 10px;
-        }
-        .yellow{ 
-            background-color: yellow; 
-        }
-        .red{ 
-            background-color: red; 
-        }
-        .blue{ 
-            background-color: blue; 
-        }
-        .green{ 
-            background-color: green; 
-        }
-</style>
+
 </head>
 <body>
     <script src="https://unpkg.com/vue"></script>
     <div id="app">
-        <p>{{age > 25?'Больше 25 лет':'25 лет или меньше' }}</p>
-        <p><a v-bind:href="link">{{text}}</a></p>
-        <p>{{checkAge()}}</p>
-        <p>{{enabled}}</p>
-        <p v-once>{{message}}</p>
-        <p><div v-html="message"></div></p>
-        <button v-on:click="increase(3)">+</button>
-        <button v-on:click="decrease(2)">-</button>
-        <div>{{counter}}</div>
-        <p><div class="region" v-bind:class="color"></div></p>
-        <input type="text" v-model="color" />
-        <p>Введите число:<input v-model="number"></p>
-        <p>{{result}}</p>
+        <h2 ref="header">Hello world!</h2>
+        <button v-on:click="change">Change</button>
+        <input type="number" v-model="number">
+        <p v-if="number == 1">odin</p>
+        <p v-else-if="number == 2">dva</p>
+        <p v-else-if="number > 2 && number < 7">neskol'ko</p>
+        <p v-else>mnogo</p>
+        <div v-show="visible">
+            <h2>zagolovok</h2>
+            <p>text</p>
+        </div>
+        <button v-on:click="visible=!visible">{{visible?'Скрыть':'Показать'}}</button>
+        <ul>
+            <li v-for="phone in phones">{{phone}}</li>
+        </ul>
+        <ul>
+            <li v-for="(phone, index) in phones">{{index + 1}}. {{phone}}</li>
+        </ul>
+        <ul>
+            <li v-for="user in users">
+                <p>Имя: {{user.name}}</p>
+                <p>Возраст: {{user.age}}</p>
+            </li>
+        </ul>
+        <ul>
+            <li v-for="user in users">
+                <p v-for="(value, key) in user">{{key}} : {{value}}</p>
+            </li>
+        </ul>
+        <ul v-for="user in users">
+            <li v-for="(value, key) in user">
+                {{key}} : {{value}}
+            </li>
+        </ul>
+        <div>
+            <span v-for="n in 15">{{n}}</span>
+        </div>
     </div>
         
     <script>
         var userData = {
-                        name: 'Tom', 
-                        age:25,
-                        text: 'Google',
-                        link:'https://google.com',
-                        message: '<h2>Hello</h2>',
-                        counter: 0,
-                        isActive: false,
-                        isBounded: false,
-                        color: "",
-                        number: '',
-                        result: ''
-                        };
+                        visible: true,
+                        number: 1,
+                        phones: ['iphone', 'galaxy', 'nokia', 'Xiaomi'],
+                        users: [
+                            {name: 'sas', age: 22},
+                            {name: 'qwe', age: 12}
+                        ]    
+                    };
         var app = new Vue({
             el: '#app',
             data: userData,
-            watch: {
-                number: function(newNumber) {
-                    if(newNumber > 0){
-                        this.factorial(newNumber);
-                    }
-                }
-            },
-            computed: {
-                enabled: function(){
-                    if (this.age > 17){
-                        return "доступ разрешен";
-                    }
-                    else {
-                        return "доступ запрещен";
-                    }
-                },
-                get: function() {
-                    return this.name + '' + this.age;
-                },
-                set: function(newValue) {
-                    var ageName = newValue.split('');
-                    this.name = names[0];
-                },
-                classObj: function() {
-                    return {
-                        active: this.isActive, bounded: this.isBounded
-                    }
-                }
-            },
-
             methods:{
-            factorial: function(newNumber){
-                this.result = 'Идёт вычисление факториала...';
-                var vm = this;
-                setTimeout(function(){
-                    var res = 1;
-                        for(var i = 1; i<=newNumber; i++){
-                            res = res * i;               
-                        }
-                        vm.result = 'factorial chisla ' + newNumber + ' raven ' + res;
-                }, 2000);
-            },
-            increase: function(n, event){
-                console.log(event);
-                this.counter = this.counter + n;
-            },
-            decrease: function(n, event){
-                if(this.counter > 0) {
-                    console.log(event);
-                this.counter = this.counter - n;
+                change: function(){
+                    this.$refs.header.innerText = "Welcome to Vue.js";
                 }
-            },
-            checkAge: function(){
-                if (this.age > 17){
-                    return "доступ разрешен";
-                }
-                else {
-                    return "доступ запрещен";
-                }
-            }
         }
     })
     </script>
