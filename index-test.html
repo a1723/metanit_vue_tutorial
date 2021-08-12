@@ -1,24 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
 <div id="app">
+    <input v-model="start" type="number">
+    <input v-model="end" type="number">
     <ul>
-      <li v-for="phone in phones">
-      <p>{{ phone }}</p>
-      </li>
+        <li v-for="phone in visibllist">
+            <p>{{phone}}</p>
+        </li>
     </ul>
-    <button v-on:click="updateList">Обновить</button>
-    <input type="text" v-model="phone">
+    <button v-on:click="visibllist">Обновить</button>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
     var app = new Vue({
         el: '#app',
         data: {
+            start:0,
+            end:3,
             phones: ['iPhone 7', 'Galaxy S8', 'Nokia N8', 'Xiaomi Mi6'],
-            phone: ''
         },
-        methods:{
-            updateList: function(){
-                Vue.set(this.phones, 0, this.phone);
+        computed:{
+            visibllist: function(){
+                return this.phones.slice(this.start, this.end);
             }
         }
     });
 </script>
+</body>
+</html>
