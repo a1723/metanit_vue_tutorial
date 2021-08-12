@@ -8,31 +8,38 @@
 </head>
 <body>
 
-<div id="app">
-    <input v-model="start" type="number">
-    <input v-model="end" type="number">
-    <ul>
-        <li v-for="phone in visibllist">
-            <p>{{phone}}</p>
+    <div id="app">
+        <p><input type="text" v-model="company" /></p>
+        <ul>
+          <li v-for="phone in filteredList">
+            <p>{{ phone.title }} - {{ phone.company }}</p>
         </li>
-    </ul>
-    <button v-on:click="visibllist">Обновить</button>
-</div>
-<script src="https://unpkg.com/vue"></script>
-<script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            start:0,
-            end:3,
-            phones: ['iPhone 7', 'Galaxy S8', 'Nokia N8', 'Xiaomi Mi6'],
-        },
-        computed:{
-            visibllist: function(){
-                return this.phones.slice(this.start, this.end);
+        </ul>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                company: '',
+                phones: [
+                    {title:'iPhone 7', company:'Apple'}, 
+                    {title:'iPhone 6S', company:'Apple'},
+                    {title:'Galaxy S8', company:'Samsung'},
+                    {title:'Galaxy S7 Edge', company:'Samsung'},
+                    {title:'Nokia N8', company:'HMD Global'}]
+            },
+            computed:{
+                filteredList: function(){
+                    var comp = this.company;
+                    return this.phones.filter(function (elem) {
+                     
+                        if(comp==='') return true;
+                        else return elem.company.indexOf(comp) > -1;
+                    })
+                }
             }
-        }
-    });
-</script>
+        });
+    </script>
 </body>
 </html>
