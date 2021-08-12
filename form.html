@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Формы во Vue.js</title>
+<meta charset="utf-8" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+</head>
+<body>
+<div id="app" class="col-md-2 p-3">
+    <label>Логин</label>
+    <input type="text" v-model="login" placeholder="Введите логин" class="form-control" /><br>
+    <label>Пароль</label>
+    <input type="password" v-model="password" placeholder="Введите пароль" class="form-control" /><br>
+    <label>Возраст</label>
+    <input type="number" v-model="age" min="18" placeholder="Введите возраст" class="form-control" /><br>
+    <label>Дата регистрации</label><br>
+    <input type="date" v-model="date" placeholder="Введите дату" class="form-control" />
+    <br>
+    <button type="button" class="btn btn-success my-3">Отправить</button>
+    <br>
+    <label>vvedite comment</label>
+    <textarea placeholder='Comment' v-model=comment class="form-control"></textarea>
+    <br>
+    <input type="checkbox" value="Tom" v-model="selectedUsers">
+    <label>C#</label><br>
+      <input type="checkbox" value="Bob" v-model="selectedUsers">
+      <label>Bob</label><br>
+      <input type="checkbox" value="Sam" v-model="selectedUsers">
+      <label>Sam</label><br>
+      <input type="checkbox" value="Alice" v-model="selectedUsers">
+      <label>Alice</label><br>
+    <div>
+        <h3>Комментарий</h3>
+        <p style="white-space: pre-line">{{comment}}</p>
+    </div>
+    <div>
+        <h3>Введенная информация</h3>
+        <p>Логин: {{login}}</p>
+        <p>Пароль: {{password}}</p>
+        <p>Возраст: {{age}}</p>
+        <p>Дата регистрации: {{date}}</p>
+    </div>
+    <span>Выбрано: {{selectedUsers}}</span>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            login:'',
+            password:'',
+            date: '',
+            age: '',
+            comment: '',
+            selectedUsers:[]
+        }
+    });
+</script>
+</body>
+</html>
