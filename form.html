@@ -8,28 +8,25 @@
 </head>
 <body>
 <div id="app" class="col-md-2 p-3">
-    <hello></hello>
-    <counter></counter>
+    <input type="text" v-model="user.name" /><br><br>
+    <input type="number" v-model.number="user.age" /><br><br>
+    <user v-bind="user"></user>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
-    Vue.component('hello', {
-        template: '<h2>Hell</h2>'
-    })
-    var comp = {
-        template:'<div><h2>{{header}}</h2></div>',
-        data: function(){
-            return {
-                header: 'Counter Program'
-            }
+Vue.component('user', {
+  props: ['name', 'age'],
+  template: '<div><h2>User</h2><p>Name: {{name}}</p><p>Age: {{age}}</p></div>'
+})
+new Vue({
+    el: "#app",
+    data: {
+        user: {
+            name: '',
+            age: 18
         }
-    };
-    var app = new Vue({
-        el: '#app',
-        components:{
-            'counter':comp
     }
-    });
+});
 </script>
 </body>
 </html>
