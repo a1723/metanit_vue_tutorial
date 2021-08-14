@@ -6,52 +6,42 @@
 </head>
 <body>
 <div id="app">
-    <h2>Список пользователей</h2>
-    <userform :user="user"></userform>
-    <div>
-        <useritem v-for="(user, index) in users"
-                    :key="index"
-                    :user="user"
-                    :index="index"
-                    v-on:userchange="change">
-        </useritem>
-    </div>
+    <h2>User</h2>
+    <useredit :name="user" @userchange="change"></useredit>
+    <userinfo :name="user" @userreset="reset"></userinfo>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
-Vue.component('userform', {
-    props: ["user"],
-    template: `<div>
-                    <input type="text" v-model="user.name" />
-                    <input type="number" v-model="user.age" />
-                </div>`,
+Vue.component('useredit', { 
+    props: ["name"],
+    template: '<div><input v-model="name" /><button @click="save">Save</button></div>',
+    methods:{
+        save(){
+            this.$emit("userchange", this.name);
+        }
+    }
 });
-Vue.component('useritem', {
-    props: ["user", "index"],
-    template: `<div>
-                    <p>Name: {{user.name}} <br> Age: {{user.age}}</p>
-                    <button  v-on:click="userChange(index)">Change</button>
-                </div>`,
-    methods: {
-        userChange: function(index){
-            this.$emit('userchange', index);
+Vue.component('userinfo', { 
+    props: ["name"],
+    template: `<div><p>Имя: {{name}}</p><button @click="reset">Reset</button></div>`,
+    methods:{
+        reset(){
+            this.$emit("userreset");
         }
     }
 });
 new Vue({
     el: "#app",
-    data: {
-        users:[
-            {name: 'Tom', age: 23},
-            {name: 'Bob', age: 26},
-            {name: 'Alice', age: 28}
-        ],
-        user:{}
+    data:{
+        user:'Tom'
     },
     methods:{
-        change: function(index){
-            this.user = this.users[index];
-        }
+        change(name){
+            this.user = name;
+        },
+        reset(){
+            this.user = 'Tom';
+        },
     }
 });
 </script>
