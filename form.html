@@ -1,51 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Миксины Vue.js</title>
+<title>Slots in Vue.js</title>
 <meta charset="utf-8" />
 </head>
 <body>
 <div id="app">
-    <light></light>
-    <enabled></enabled>
+    <container>
+        <p>Первый абзац.</p>
+        <p>Второй абзац.</p>
+     </container>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
-Vue.component('light', { 
-  template: `<div><h3>{{header}}</h3>
-                <button v-on:click="toggle" v-show="state">{{on}}</button>
-                <button v-on:click="toggle" v-show="!state">{{off}}</button>
-                </div>`, 
-  data: function(){
-    return { state: true, on: "ON", off: "OFF"}
-  },
-  methods:{
-    toggle: function(){
-        this.state= !this.state;
-    }
-  },
-  computed:{
-    header(){
-        return this.state==true?"Свет включен":"Свет выключен";
-    }
-  }
+Vue.component('container', { 
+    template: `<div>
+                <header>
+                    <slot name="header">Заголовок по умолчанию</slot>
+                </header>
+                <article>
+                    <slot></slot>
+                </article>
+                <footer>
+                    <slot name="footer">asdad</slot>
+                </footer>
+            </div>` 
 });
-Vue.component('enabled', { 
-  template: `<div>Включить функцию
-                <button v-on:click="toggle" v-show="state">{{on}}</button>
-                <button v-on:click="toggle" v-show="!state">{{off}}</button>
-                </div>`, 
-  data: function(){
-    return { state: true, on: "ON", off: "OFF"}
-  },
-  methods:{
-    toggle: function(){
-        this.state= !this.state;
-    }
-  }
-});
-new Vue({
-    el: "#app"
+new Vue({ 
+  el: '#app'
 });
 </script>
 </body>
